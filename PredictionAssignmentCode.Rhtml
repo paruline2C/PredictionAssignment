@@ -1,0 +1,80 @@
+<html>
+
+<head>
+<title>Prediction Assignment Writeup"</title>
+</head>
+
+<body>
+
+<H2> Project's goals </H3>
+
+Using accelerometer from enthousiasts volunteers performing particular activites, the objectives are to predict "how well they do (their activity)". 
+
+Several kinds of datas are colllected from accelerometers on the belt, forearm, arm, and dumbell of 6 participants. The training set included a "activity classification" with an additionnal data called "class". This value should be predicted by the machine learning model using other variables.
+
+
+<H2> Processing </H2>
+
+The processing of data is performed in several steps
+
+<b>1) Selectin predictors </b>
+In the collected dataset, some observation are missing (no values) not useable (NA variables). They are firstly removed from the data set to keep only useful predictors. 
+
+The following variables including missing values are removed :
+- "sknewness" and "kurtoisis" data 
+-  data"max_yaw_","min_yaw_,"amplitude_yaw_"
+
+In addition the "X","user_name","raw_timestamp","cvtd","new_window","num_widow", variables are removed, as they are not related to dynamics measurement.
+              
+      
+<b>2) Creating a train/test data </b>
+Trainning datas are splitted in two subset : a training dataset (60%) to train the mode and a test dataset (40%) to check model accucracy
+
+<b>3) Pre-processing </b>
+As remaing variables describes a large variety of ranges, they are centered and rescale to be more easily used during training sequence
+
+
+<b> 4) Model Fitting </b>
+The model is fit using the "train" function on the "caret" package.
+As the predicted "classe" variable is a factor, an random forest algorithm is selected.
+
+Boosting method was firstly used to optimize model performance, but it delivers an accuracy of 1 in train set and let think about overfitting. So, no optimization methode are used for the final fitting.
+
+
+<H2> Results </H2>
+
+A random forest is establised using the  Main predictors :
+roll_belt           100.00
+pitch_forearm       65.38
+magnet_dumbbell_z   44.45
+yaw_belt            44.12
+magnet_dumbbell_y   38.58
+pitch_belt          36.08
+roll_forearm        35.06
+magnet_dumbbell_x   26.79
+roll_dumbbell       25.87
+accel_forearm_x     20.57
+
+
+Mode Details :
+Call:
+ randomForest(x = x, y = y, mtry = param$mtry, model = "rf", trainControl = ..2) 
+               Type of random forest: classification
+                     Number of trees: 500
+No. of variables tried at each split: 29
+
+
+
+The fitted model leads to the following results
+* Accuracy on train subset (pre-processed) : 0.9885409  
+* Accuracy on test subset : 0.945195
+
+
+<H2> Final prediction </H2>
+
+The final prediction on test data are the following :
+E A A E A E D D A E B C B A E E E B E B
+
+
+</body>
+</html>
